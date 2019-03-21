@@ -5,6 +5,8 @@ public enum Point {
     FIFTEEN("15"),
     THIRTY("30"),
     FORTY("40"),
+    DEUCE("DEUCE"),
+    ADV("ADV"),
     WIN("WIN");
 
     private String text;

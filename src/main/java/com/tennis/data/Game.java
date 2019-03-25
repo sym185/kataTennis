@@ -10,8 +10,8 @@ public class Game{
     private Player playerTwo;
 
     public Game() {
-        playerOne = new Player(1, "playerOne", Point.ZERO, false);
-        playerTwo = new Player(2, "playerTwo", Point.ZERO, false);
+        playerOne = new Player(1, "playerOne", Point.ZERO, false, 0, false);
+        playerTwo = new Player(2, "playerTwo", Point.ZERO, false, 0, false);
     }
 
     public void score(Player player) throws FunctionalException {
@@ -21,9 +21,34 @@ public class Game{
             case THIRTY: player.setPoint(Point.FORTY) ; manageDeuce() ;break;
             case FORTY: manageAdv(player); break;
             case DEUCE: manageAdv(player); break;
-            case ADV: player.setPoint(Point.ZERO); player.setWinner(true) ;break;
+            case ADV: player.setPoint(Point.ZERO); player.setGameWinner(true) ; manageSetScore(player);break;
             default : throw new FunctionalException(EnumFunctionalException.ERROR_POINT);
         }
+    }
+
+    public void manageSetScore(Player player){
+        player.setSetScore(player.getSetScore() + 1);
+
+        if(player.getSetScore() >= 6){
+               if(player == playerOne && playerTwo.getSetScore() < 5){
+                   manageSetWinner(playerOne);
+               }
+               else if(player == playerTwo && playerOne.getSetScore() < 5){
+                   manageSetWinner(playerTwo);
+               }
+               else if (player.getSetScore() == 7){
+                   manageSetWinner(player);
+               }
+        }
+
+    }
+
+    public void manageSetWinner(Player player){
+        player.setSetWinner(true);
+        playerOne.setPoint(Point.ZERO);
+        playerTwo.setPoint(Point.ZERO);
+        playerOne.setGameWinner(false);
+        playerTwo.setGameWinner(false);
     }
 
     public void manageDeuce(){
@@ -37,12 +62,12 @@ public class Game{
     public void manageAdv(Player player){
         if(playerOne.getPoint() == Point.FORTY && playerTwo.getPoint() != Point.DEUCE && playerTwo.getPoint() != Point.FORTY
                 && playerTwo.getPoint() != Point.ADV) {
-                manageWinner(player);
+                manageGameWinner(player);
         }
 
         else if(playerTwo.getPoint() == Point.FORTY && playerOne.getPoint() != Point.DEUCE && playerOne.getPoint() != Point.FORTY
                 && playerOne.getPoint() != Point.ADV) {
-                manageWinner(player);
+                manageGameWinner(player);
         }
 
         else if(playerOne.getPoint() == Point.DEUCE && playerTwo.getPoint() == Point.DEUCE){
@@ -60,7 +85,8 @@ public class Game{
             if(player == playerOne){
                 playerOne.setPoint(Point.ZERO);
                 playerTwo.setPoint(Point.ZERO);
-                playerOne.setWinner(true);
+                playerOne.setGameWinner(true);
+                manageSetScore(playerOne);
             }
             else if (player == playerTwo){
                 playerOne.setPoint(Point.DEUCE);
@@ -76,24 +102,27 @@ public class Game{
             else if (player == playerTwo){
                 playerOne.setPoint(Point.ZERO);
                 playerTwo.setPoint(Point.ZERO);
-                playerTwo.setWinner(true);
+                playerTwo.setGameWinner(true);
+                manageSetScore(playerTwo);
             }
         }
 
     }
 
-        public void manageWinner(Player player) {
+        public void manageGameWinner(Player player) {
 
             if(player == playerOne){
                 playerOne.setPoint(Point.ZERO);
                 playerTwo.setPoint(Point.ZERO);
-                playerOne.setWinner(true);
+                playerOne.setGameWinner(true);
+                manageSetScore(playerOne);
             }
 
             else if(player == playerTwo){
                 playerOne.setPoint(Point.ZERO);
                 playerTwo.setPoint(Point.ZERO);
-                playerTwo.setWinner(true);
+                playerTwo.setGameWinner(true);
+                manageSetScore(playerTwo);
             }
 
         }

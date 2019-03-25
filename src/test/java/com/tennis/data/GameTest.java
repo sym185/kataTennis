@@ -35,7 +35,7 @@ public class GameTest {
 
         game.score(game.getPlayerOne());
         assertEquals(game.getPlayerOne().getPoint(), Point.ZERO);
-        assertTrue(game.getPlayerOne().isWinner());
+        assertTrue(game.getPlayerOne().isGameWinner());
     }
 
     @Test(expected=FunctionalException.class)
@@ -47,12 +47,12 @@ public class GameTest {
 
     @Test
     public void manageWinnerTest(){
-        game.manageWinner(game.getPlayerOne());
+        game.manageGameWinner(game.getPlayerOne());
 
         assertEquals(game.getPlayerOne().getPoint(), Point.ZERO);
         assertEquals(game.getPlayerTwo().getPoint(), Point.ZERO);
-        assertTrue(game.getPlayerOne().isWinner());
-        assertFalse(game.getPlayerTwo().isWinner());
+        assertTrue(game.getPlayerOne().isGameWinner());
+        assertFalse(game.getPlayerTwo().isGameWinner());
     }
 
     @Test
@@ -74,7 +74,7 @@ public class GameTest {
 
         assertEquals(game.getPlayerOne().getPoint(), Point.ZERO);
         assertEquals(game.getPlayerTwo().getPoint(), Point.ZERO);
-        assertTrue(game.getPlayerOne().isWinner());
+        assertTrue(game.getPlayerOne().isGameWinner());
 
     }
 
@@ -86,7 +86,7 @@ public class GameTest {
 
         assertEquals(game.getPlayerOne().getPoint(), Point.ZERO);
         assertEquals(game.getPlayerTwo().getPoint(), Point.ZERO);
-        assertTrue(game.getPlayerTwo().isWinner());
+        assertTrue(game.getPlayerTwo().isGameWinner());
 
     }
 
@@ -120,7 +120,7 @@ public class GameTest {
 
         assertEquals(game.getPlayerOne().getPoint(), Point.ZERO);
         assertEquals(game.getPlayerTwo().getPoint(), Point.ZERO);
-        assertTrue(game.getPlayerOne().isWinner());
+        assertTrue(game.getPlayerOne().isGameWinner());
     }
 
     @Test
@@ -152,7 +152,47 @@ public class GameTest {
 
         assertEquals(game.getPlayerOne().getPoint(), Point.ZERO);
         assertEquals(game.getPlayerTwo().getPoint(), Point.ZERO);
-        assertTrue(game.getPlayerTwo().isWinner());
+        assertTrue(game.getPlayerTwo().isGameWinner());
+    }
+
+
+    @Test
+    public void manageSetWinnerTest(){
+        game.manageSetWinner(game.getPlayerOne());
+        assertEquals(game.getPlayerOne().getPoint(), Point.ZERO);
+        assertEquals(game.getPlayerTwo().getPoint(), Point.ZERO);
+        assertEquals(game.getPlayerOne().isGameWinner(), false);
+        assertEquals(game.getPlayerTwo().isGameWinner(), false);
+        assertTrue(game.getPlayerOne().isSetWinner());
+    }
+
+    @Test
+    public void manageSetScoreTest(){
+        game.getPlayerOne().setSetScore(5);
+        game.manageSetScore(game.getPlayerOne());
+
+        assertTrue(game.getPlayerOne().isSetWinner());
+    }
+
+    @Test
+    public void manageSetScoreTest2(){
+        game.getPlayerOne().setSetScore(5);
+        game.getPlayerTwo().setSetScore(5);
+        game.manageSetScore(game.getPlayerOne());
+
+        assertFalse(game.getPlayerOne().isSetWinner());
+        assertFalse(game.getPlayerTwo().isSetWinner());
+    }
+
+
+    @Test
+    public void manageSetScoreTest3(){
+        game.getPlayerOne().setSetScore(6);
+        game.getPlayerTwo().setSetScore(5);
+        game.manageSetScore(game.getPlayerOne());
+
+        assertTrue(game.getPlayerOne().isSetWinner());
+        assertFalse(game.getPlayerTwo().isSetWinner());
     }
 
 }

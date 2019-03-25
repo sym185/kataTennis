@@ -9,13 +9,24 @@ public class Player{
     private long id;
     private String name;
     private Point point;
-    private boolean winner;
+    private boolean gameWinner;
+    private int setScore;
+    private boolean setWinner;
 
-    public Player(long id, String name, Point point, boolean winner) {
+    public Player(long id, String name, Point point, boolean gameWinner, int setScore, boolean setWinner) {
         this.id = id;
         this.name = name;
         this.point = point;
-        this.winner = winner;
+        this.gameWinner = gameWinner;
+        this.setScore = setScore;
+        this.setWinner = setWinner;
+    }
+
+    public Player(long id, String name, Point point, boolean gameWinner) {
+        this.id = id;
+        this.name = name;
+        this.point = point;
+        this.gameWinner = gameWinner;
     }
 
     public long getId() {
@@ -42,12 +53,28 @@ public class Player{
         this.point = point;
     }
 
-    public boolean isWinner() {
-        return winner;
+    public boolean isGameWinner() {
+        return gameWinner;
     }
 
-    public void setWinner(boolean winner) {
-        this.winner = winner;
+    public void setGameWinner(boolean gameWinner) {
+        this.gameWinner = gameWinner;
+    }
+
+    public int getSetScore() {
+        return setScore;
+    }
+
+    public void setSetScore(int setScore) {
+        this.setScore = setScore;
+    }
+
+    public boolean isSetWinner() {
+        return setWinner;
+    }
+
+    public void setSetWinner(boolean setWinner) {
+        this.setWinner = setWinner;
     }
 
     @Override
@@ -56,13 +83,13 @@ public class Player{
         if (o == null || getClass() != o.getClass()) return false;
         Player player = (Player) o;
         return id == player.id &&
-                winner == player.winner &&
+                gameWinner == player.gameWinner &&
                 Objects.equals(name, player.name) &&
                 point == player.point;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, point, winner);
+        return Objects.hash(id, name, point, gameWinner);
     }
 }

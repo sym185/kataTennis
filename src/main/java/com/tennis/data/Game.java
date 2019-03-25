@@ -30,15 +30,40 @@ public class Game{
         player.setSetScore(player.getSetScore() + 1);
 
         if(player.getSetScore() >= 6){
-               if(player == playerOne && playerTwo.getSetScore() < 5){
-                   manageSetWinner(playerOne);
-               }
-               else if(player == playerTwo && playerOne.getSetScore() < 5){
-                   manageSetWinner(playerTwo);
-               }
-               else if (player.getSetScore() == 7){
-                   manageSetWinner(player);
-               }
+            if(player == playerOne && playerTwo.getSetScore() < 5){
+                manageSetWinner(playerOne);
+            }
+            else if(player == playerTwo && playerOne.getSetScore() < 5){
+                manageSetWinner(playerTwo);
+            }
+            else if(player == playerOne && playerOne.getSetScore() == 7 && playerTwo.getSetScore() <= 5){
+                manageSetWinner(playerOne);
+            }
+            else if(player == playerTwo && playerTwo.getSetScore() == 7 && playerOne.getSetScore() <= 5){
+                manageSetWinner(playerTwo);
+            }
+            else if (playerOne.getSetScore() == 6 && playerTwo.getSetScore() == 6){
+                manageTieBreak();
+            }
+        }
+
+    }
+
+    public void manageTieBreak(){
+        playerOne.setTieBreakScore(0);
+        playerTwo.setTieBreakScore(0);
+    }
+
+    public void scoreTieBreak(Player player){
+        player.setTieBreakScore(player.getTieBreakScore() + 1);
+
+        if(player.getTieBreakScore() >= 7){
+            if(player == playerOne && ((playerOne.getTieBreakScore() - playerTwo.getTieBreakScore()) >= 2)){
+                manageSetWinner(playerOne);
+            }
+            else if (player == playerTwo && ((playerTwo.getTieBreakScore() - playerOne.getTieBreakScore()) >= 2)){
+                manageSetWinner(playerTwo);
+            }
         }
 
     }
@@ -49,6 +74,8 @@ public class Game{
         playerTwo.setPoint(Point.ZERO);
         playerOne.setGameWinner(false);
         playerTwo.setGameWinner(false);
+        playerOne.setTieBreakScore(0);
+        playerTwo.setTieBreakScore(0);
     }
 
     public void manageDeuce(){

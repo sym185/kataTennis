@@ -12,6 +12,7 @@ public class Player{
     private boolean gameWinner;
     private int setScore;
     private boolean setWinner;
+    private int tieBreakScore;
 
     public Player(long id, String name, Point point, boolean gameWinner, int setScore, boolean setWinner) {
         this.id = id;
@@ -75,6 +76,14 @@ public class Player{
 
     public void setSetWinner(boolean setWinner) {
         this.setWinner = setWinner;
+    }
+
+    public int getTieBreakScore() {
+        return tieBreakScore;
+    }
+
+    public void setTieBreakScore(int tieBreakScore) {
+        this.tieBreakScore = tieBreakScore;
     }
 
     @Override

@@ -163,6 +163,8 @@ public class GameTest {
         assertEquals(game.getPlayerTwo().getPoint(), Point.ZERO);
         assertEquals(game.getPlayerOne().isGameWinner(), false);
         assertEquals(game.getPlayerTwo().isGameWinner(), false);
+        assertEquals(game.getPlayerOne().getTieBreakScore(), 0);
+        assertEquals(game.getPlayerTwo().getTieBreakScore(), 0);
         assertTrue(game.getPlayerOne().isSetWinner());
     }
 
@@ -194,5 +196,52 @@ public class GameTest {
         assertTrue(game.getPlayerOne().isSetWinner());
         assertFalse(game.getPlayerTwo().isSetWinner());
     }
+
+    @Test
+    public void manageTieBreakTest(){
+        assertEquals(game.getPlayerOne().getTieBreakScore(), 0);
+        assertEquals(game.getPlayerTwo().getTieBreakScore(), 0);
+    }
+
+    @Test
+    public void scoreTieBreakTest(){
+        game.getPlayerOne().setTieBreakScore(6);
+        game.getPlayerTwo().setTieBreakScore(5);
+        game.scoreTieBreak(game.getPlayerOne());
+
+        assertTrue(game.getPlayerOne().isSetWinner());
+        assertEquals(game.getPlayerOne().getPoint(), Point.ZERO);
+        assertEquals(game.getPlayerTwo().getPoint(), Point.ZERO);
+        assertEquals(game.getPlayerOne().getTieBreakScore(), 0);
+        assertEquals(game.getPlayerTwo().getTieBreakScore(), 0);
+    }
+
+    @Test
+    public void scoreTieBreakTest2(){
+        game.getPlayerOne().setTieBreakScore(6);
+        game.getPlayerTwo().setTieBreakScore(6);
+        game.scoreTieBreak(game.getPlayerOne());
+
+        assertFalse(game.getPlayerOne().isSetWinner());
+        assertEquals(game.getPlayerOne().getPoint(), Point.ZERO);
+        assertEquals(game.getPlayerTwo().getPoint(), Point.ZERO);
+        assertEquals(game.getPlayerOne().getTieBreakScore(), 7);
+        assertEquals(game.getPlayerTwo().getTieBreakScore(), 6);
+    }
+
+
+    @Test
+    public void scoreTieBreakTest3(){
+        game.getPlayerOne().setTieBreakScore(9);
+        game.getPlayerTwo().setTieBreakScore(8);
+        game.scoreTieBreak(game.getPlayerOne());
+
+        assertTrue(game.getPlayerOne().isSetWinner());
+        assertEquals(game.getPlayerOne().getPoint(), Point.ZERO);
+        assertEquals(game.getPlayerTwo().getPoint(), Point.ZERO);
+        assertEquals(game.getPlayerOne().getTieBreakScore(), 0);
+        assertEquals(game.getPlayerTwo().getTieBreakScore(), 0);
+    }
+
 
 }
